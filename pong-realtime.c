@@ -14,14 +14,39 @@ struct Ball {
     char target_x, target_y;
 };
 
-struct Player p1 = {11, 0}, p2 = {11, 16};
+struct Player p1 = {11, 0}, p2 = {11, 0};
 struct Ball ball = {20, 20, 'R', 'U'};
 char cmd;
+
+void win() {
+    clear();
+    printf("PLAYER");
+    refresh();
+    usleep(1000 * 500);
+    if (p1.score >= 21) {
+        printf(" 1");
+    } else {
+        printf(" 2");
+    }
+    refresh();
+    usleep(1000 * 500);
+    printf(" WIN!");
+    refresh();
+    usleep(1000 * 500);
+
+    printf("\n\nPRESS ANY BUTTON TO QUIT\n");
+    refresh();
+    scanf("%c", &cmd);
+}
 
 void ShowField() {
     printf("\e[1;1H\e[2J");
     clear();
-    for (int i = 0; i < 34; i++) {
+    for (int i = 0; i < 20; i++) {
+        printf(" ");
+    }
+    printf("PLAYER1");
+    for (int i = 0; i < 7; i++) {
         printf(" ");
     }
     if (p1.score < 10) {
@@ -36,6 +61,10 @@ void ShowField() {
         printf(" ");
     }
     printf("%d", p2.score);
+    for (int i = 0; i < 7; i++) {
+        printf(" ");
+    }
+    printf("PLAYER2");
     printf("\n");
 
     for (int y = 0; y < 25; y++) {
@@ -123,11 +152,7 @@ int main() {
             ResetBall('R');
         }
     }
+    win();
     endwin();
-    if (p1.score == 21) {
-        printf("Player1 win\n");
-    } else {
-        printf("Player2 win\n");
-    }
     return 0;
 }
